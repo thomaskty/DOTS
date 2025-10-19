@@ -1,0 +1,38 @@
+echo $SHELL  
+printenv 
+cat ~/.zshrc 
+printenv | grep MY_VAR 
+code ~/.zshrc 
+source ~/.zshrc 
+
+python3 -m venv env
+source env_name/bin/activate
+
+conda create --prefix ./env_name python=3.x
+Conda activate ./env_name 
+conda info --envs 
+
+
+conda config --set auto_activate_base false
+
+
+-- Command for activating .conda enviornemnt in your project directory
+conda activate ./.conda
+
+conda create --prefix ./.conda python=3.12
+
+# getting all the user installed libraries and version
+pip list --not-required
+
+# registering kernel in jupyter
+(.venv) python -m ipykernel install --user --name=mistral-venv --display-name "Python (.venv Mistral-labs)"
+
+
+# postgress command line connection 
+# postgres bin should be in the path variables. 
+
+psql -U postgres -h localhost -p 5432 -d postgres
+
+
+
+

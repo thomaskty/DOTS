@@ -1,0 +1,14 @@
+{
+    "ai":{
+        "rag":[
+            "https://levelup.gitconnected.com/building-the-entire-rag-ecosystem-and-optimizing-every-component-8f23349b96a4"
+        ],
+        "mcp":[
+            "https://github.com/daveebbelaar/ai-cookbook.git"
+        ]
+        "cookbooks":[
+            "https://github.com/mistralai/cookbook"
+        ]
+    
+    }
+}

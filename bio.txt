@@ -1,0 +1,96 @@
+Languages: 
+	Python
+	SQL
+	R
+	JavaScript
+	TypeScript
+	HTML 
+	CSS
+Frameworks & Libraries: 
+	LangChain 
+	LangGraph 
+	Hugging Face Transformers 
+	PyTorch 
+	PyTorch Lightning 
+	TensorFlow 
+	Scikit-learn 
+	Pandas 
+	NumPy 
+	Flask 
+	FastAPI
+    React
+AI & ML: 
+	Machine Learning 
+	Deep Learning 
+	Time Series Analysis 
+	Clustering 
+	Regression 
+	Classification 
+	Ensemble Methods 
+	Neural Networks 
+	CNNs 
+	LSTMs 
+	Transformers 
+    GPT
+    BERT
+	GANs 
+	Large Language Models
+	RAG
+	Model Fine Tuning
+
+MLOps / LLMOps: 
+	MLflow 
+	Docker 
+	Git 
+	GitHub Actions 
+	CI/CD Pipelines 
+	Model Deployment 
+	Model Monitoring 
+	Vector Databases 
+		Pinecone
+		Chroma
+		Weaviate 
+	Prompt Engineering 
+	Experiment Tracking
+
+Cloud Platforms: 
+	Microsoft Azure
+		Azure Fundamentals Certification
+	AWS
+Databases: 
+	SQL
+		PostgreSQL
+		MySQL
+	MongoDB 
+	Hive
+Analytics & Visualization: 
+	Tableau 
+	MS Excel
+	Statistical Analysis
+		Inferential
+		Descriptive
+		Hypothesis Testing
+		A/B Testing
+Development Practices: 
+	Software Development Life Cycle (SDLC) 
+	Agile 
+	Testing (Pytest/Unit Testing)
+	Design Patterns
+	REST API Design
+	Microservices Architecture
+Tools: 
+	GitHub
+	Streamlit
+	MLflow
+	Terraform (basics)
+	Kubernetes (AKS)
+	Redis (caching)
+	Prometheus & Grafana (monitoring)
+	Docker
+
+Resume Profile Summary
+	AI & Data Scientist with 4 years of industry experience and practical software engineering skills. Experienced in building and deploying machine learning and deep learning solutions end-to-end. Strong expertise in Python SQL PyTorch Hugging Face LangChain and modern MLOps practices with Docker Git CI/CD and MLflow. Skilled at bridging theory and practice—translating advanced analytics time series and LLM research into scalable real-world applications. Hands-on with Azure and AWS for cloud-based AI development.
+
+LinkedIn Bio / About Section
+	AI & Data Scientist with 4 years of industry experience and practical software engineering skills. I combine expertise in machine learning deep learning statistics and large language models with the ability to design build and deploy AI-powered systems. I work across the full AI lifecycle: from data analysis and model training to production deployment monitoring and scaling on Azure and AWS. My toolkit includes PyTorch Hugging Face LangChain SQL and Python supported by engineering practices with Docker Git and CI/CD pipelines.
+

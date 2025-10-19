@@ -1,0 +1,45 @@
+# 🐳 Docker Fundamentals Cheat Sheet
+
+# Images
+docker images                # List all images
+docker pull <image>:<tag>    # Pull an image from Docker Hub
+docker rmi <image_id>        # Remove an image
+docker build -t myimage:1.0 .# Build an image from Dockerfile
+
+# Containers
+docker run --name myapp -d -p 8080:80 nginx       # Run a container
+docker ps                   # List running containers
+docker ps -a                # List all containers (running + stopped)
+docker stop <name_or_id>    # Stop a running container
+docker start <name_or_id>   # Start a stopped container
+docker rm <name_or_id>      # Remove a container
+docker logs <name_or_id>    # View logs of a container
+docker exec -it <name_or_id> bash   # Enter container shell
+docker stats                # Show resource usage of running containers
+
+# Volumes
+docker volume ls            # List all volumes
+docker volume create mydata # Create a new volume
+docker run -v mydata:/path/in/container image  # Mount volume in a container
+docker volume rm mydata     # Remove a volume
+
+# Networks
+docker network ls           # List all networks
+docker network create mynet # Create a network
+docker run --network=mynet --name=app1 -d nginx # Run container on a network
+docker network rm mynet     # Remove a network
+
+# System
+docker system prune -a --volumes  # Cleanup unused containers, images, volumes (destructive)
+docker system df                  # Show Docker disk usage
+
+# Docker Compose
+docker compose up -d          # Start services defined in docker-compose.yml
+docker compose down           # Stop and remove services
+
+
+
+-- running postgres and pgadmin
+docker run --name postgres-server -e POSTGRES_PASSWORD=<postgres_password> -p 5432:5432 -d postgres:13.22
+docker run --name pgadmin-server -p 5050:80 -e PGADMIN_DEFAULT_EMAIL=<mail_id> -e PGADMIN_DEFAULT_PASSWORD=<pgadmin_password> -d dpage/pgadmin4
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' postgres-server
