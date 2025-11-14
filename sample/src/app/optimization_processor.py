@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Dict, Any
 
 from app.playbooks.optimization.base_playbook import PlaybookConfig, PlaybookResult
-from app.utils.types import get_playbook_class
+from app.playbooks.optimization.portfolio_optimization_playbook import PortfolioOptimizationPlaybook
 from app.utils.logger import Logger
 
 # Initialize logger
@@ -28,7 +28,6 @@ def load_config(config_path: str) -> Dict[str, Any]:
     LOGGER.info(f"Loading configuration from: {config_path}")
     with open(config_path, 'r') as f:
         config = yaml.safe_load(f)
-    LOGGER.debug(f"Configuration loaded successfully")
     return config
 
 
@@ -74,7 +73,6 @@ def get_output_directory(config: Dict[str, Any]) -> str:
 
     if base_path:
         output_dir = Path(base_path) / 'outputs' / model_name
-        LOGGER.debug(f"Using base_path from config: {base_path}")
     else:
         if 'output' in config and isinstance(config['output'], dict):
             if 'directory' in config['output'] and Path(config['output']['directory']).is_absolute():
@@ -86,9 +84,12 @@ def get_output_directory(config: Dict[str, Any]) -> str:
 
     return str(output_dir)
 
+
 def optimization_runner(config_path: str) -> PlaybookResult:
     """Main runner for optimization playbooks."""
+    LOGGER.info("=" * 70)
     LOGGER.info("OPTIMIZATION PROCESSOR")
+    LOGGER.info("=" * 70)
 
     # Load configuration
     config_dict = load_config(config_path)
@@ -133,16 +134,13 @@ def optimization_runner(config_path: str) -> PlaybookResult:
 
     # Determine playbook type
     playbook_type = config_dict.get('playbook_type', 'portfolio_optimization')
-
     LOGGER.info(f"Initializing playbook: {playbook_type}")
 
-    # Create and execute playbook
-    try:
-        PlaybookClass = get_playbook_class(playbook_type)
-        playbook = PlaybookClass(config=playbook_config)
-    except ValueError as e:
-        LOGGER.error(f"Failed to initialize playbook: {e}")
-        raise
+    # Create playbook based on type (direct import, no registry)
+    if playbook_type == 'portfolio_optimization':
+        playbook = PortfolioOptimizationPlaybook(config=playbook_config)
+    else:
+        raise ValueError(f"Unknown playbook type: {playbook_type}")
 
     LOGGER.info("EXECUTING PLAYBOOK")
 
@@ -156,16 +154,16 @@ def optimization_runner(config_path: str) -> PlaybookResult:
 
     if result.optimization_result:
         LOGGER.info(f"Optimization Results:")
-        LOGGER.info(f"Status: {result.optimization_result.status.value}")
-        LOGGER.info(f"Objective Value (Tax Liability): ${result.optimization_result.objective_value:,.2f}")
-        LOGGER.info(f"Solver Time: {result.optimization_result.solver_time:.4f}s")
+        LOGGER.info(f"  Status: {result.optimization_result.status.value}")
+        LOGGER.info(f"  Objective Value (Tax Liability): ${result.optimization_result.objective_value:,.2f}")
+        LOGGER.info(f"  Solver Time: {result.optimization_result.solver_time:.4f}s")
 
     if result.output_summary and 'optimization_summary' in result.output_summary:
         summary = result.output_summary['optimization_summary']
 
+        LOGGER.info("=" * 70)
         LOGGER.info("TAX OPTIMIZATION SUMMARY")
-
-        # Concise one-line format
+        LOGGER.info("=" * 70)
         LOGGER.info(
             f"ST Gains: ${summary['total_short_term_gain']:,.2f} | ST Losses: ${summary['total_short_term_loss']:,.2f} | ST Net: ${summary['net_short_term_gain']:,.2f}")
         LOGGER.info(
@@ -181,17 +179,15 @@ def optimization_runner(config_path: str) -> PlaybookResult:
         LOGGER.info(
             f"Tax Rates - ST: {summary['short_term_tax_rate'] * 100:.1f}% | LT: {summary['long_term_tax_rate'] * 100:.1f}%")
         LOGGER.info(f"Estimated Tax: ${summary['estimated_tax']:,.2f}")
+        LOGGER.info("=" * 70)
 
     if result.warnings:
-        LOGGER.warning(f"Warnings: {len(result.warnings)}")
         for warning in result.warnings:
-            LOGGER.warning(f"{warning}")
+            LOGGER.warning(f"⚠ {warning}")
 
     if result.errors:
         LOGGER.error(f"Errors: {len(result.errors)}")
         for error in result.errors[:5]:
-            LOGGER.error(f"{error}")
-
-
+            LOGGER.error(f"✗ {error}")
 
     return result

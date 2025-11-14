@@ -296,16 +296,14 @@ class BasePlaybook(ABC):
 
     def _create_optimizer(self) -> BaseOptimizer:
         """Create optimizer instance based on config"""
-        from app.utils.types import get_optimizer_class
+        from app.models.optimizers.milp import MILPOptimizer
 
         optimizer_type = (self.config.model_type or self.config.optimizer_type or 'milp').lower()
 
-        try:
-            OptimizerClass = get_optimizer_class(optimizer_type)
-            return OptimizerClass(**self.config.optimizer_params)
-        except ValueError as e:
-            LOGGER.error(f"Failed to create optimizer: {e}")
-            raise
+        if optimizer_type == 'milp':
+            return MILPOptimizer(**self.config.optimizer_params)
+        else:
+            raise ValueError(f"Unknown optimizer type: {optimizer_type}")
 
     def _summarize_input(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
         """Create input data summary"""
