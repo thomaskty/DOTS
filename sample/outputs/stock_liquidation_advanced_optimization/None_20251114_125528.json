@@ -1,0 +1,210 @@
+{
+  "playbook_name": null,
+  "status": "success",
+  "optimization_result": {
+    "status": "optimal",
+    "objective_value": 1452.0,
+    "variables": {
+      "lot_0": 1.0,
+      "lot_1": 1.0,
+      "lot_2": 1.0,
+      "lot_3": 1.0,
+      "lot_4": 1.0
+    },
+    "dual_values": null,
+    "solver_time": 0.039554595947265625,
+    "iterations": null,
+    "message": "APPSTATUS: 1",
+    "metadata": {
+      "solver": "APOPT",
+      "remote": false,
+      "problem_type": "MILP",
+      "num_variables": 5,
+      "num_constraints": 3,
+      "gekko_options": {
+        "SOLVER": 1,
+        "IMODE": 3,
+        "MAX_TIME": 600,
+        "MIP_GAP": 0.01
+      }
+    }
+  },
+  "execution_time": 0.08276009559631348,
+  "input_summary": {
+    "holdings": {
+      "type": "DataFrame",
+      "shape": [
+        3,
+        4
+      ]
+    },
+    "purchase_history": {
+      "type": "DataFrame",
+      "shape": [
+        5,
+        4
+      ]
+    }
+  },
+  "output_summary": {
+    "status": "optimal",
+    "sell_decisions": [
+      {
+        "ticker": "MSFT",
+        "acquisition_date": "2022-11-01",
+        "quantity": 75,
+        "quantity_to_sell": 75.0,
+        "sell": true,
+        "sell_fraction": 1.0,
+        "purchase_price": 200.0,
+        "current_price": 250.0,
+        "is_long_term": true,
+        "holding_period_days": 806,
+        "capital_gain": 3750.0
+      },
+      {
+        "ticker": "AAPL",
+        "acquisition_date": "2023-01-15",
+        "quantity": 50,
+        "quantity_to_sell": 50.0,
+        "sell": true,
+        "sell_fraction": 1.0,
+        "purchase_price": 150.0,
+        "current_price": 180.0,
+        "is_long_term": true,
+        "holding_period_days": 731,
+        "capital_gain": 1500.0
+      },
+      {
+        "ticker": "GOOG",
+        "acquisition_date": "2023-03-01",
+        "quantity": 30,
+        "quantity_to_sell": 30.0,
+        "sell": true,
+        "sell_fraction": 1.0,
+        "purchase_price": 120.0,
+        "current_price": 150.0,
+        "is_long_term": true,
+        "holding_period_days": 686,
+        "capital_gain": 900.0
+      },
+      {
+        "ticker": "AAPL",
+        "acquisition_date": "2024-05-20",
+        "quantity": 50,
+        "quantity_to_sell": 50.0,
+        "sell": true,
+        "sell_fraction": 1.0,
+        "purchase_price": 170.0,
+        "current_price": 180.0,
+        "is_long_term": false,
+        "holding_period_days": 240,
+        "capital_gain": 500.0
+      },
+      {
+        "ticker": "GOOG",
+        "acquisition_date": "2025-01-10",
+        "quantity": 20,
+        "quantity_to_sell": 20.0,
+        "sell": true,
+        "sell_fraction": 1.0,
+        "purchase_price": 145.0,
+        "current_price": 150.0,
+        "is_long_term": false,
+        "holding_period_days": 5,
+        "capital_gain": 100.0
+      }
+    ],
+    "optimization_summary": {
+      "total_short_term_gain": 600.0,
+      "total_short_term_loss": 0.0,
+      "total_long_term_gain": 6150.0,
+      "total_long_term_loss": 0.0,
+      "net_short_term_gain": 600.0,
+      "net_long_term_gain": 6150.0,
+      "total_net_capital_gain": 6750.0,
+      "tax_offset": 0.0,
+      "taxable_capital_gain": 6750.0,
+      "carryforward_loss": 0.0,
+      "estimated_tax": 1452.0,
+      "short_term_tax_rate": 0.37,
+      "long_term_tax_rate": 0.2
+    },
+    "ticker_summary": [
+      {
+        "ticker": "AAPL",
+        "shares_sold": 100.0,
+        "capital_gain": 2000.0
+      },
+      {
+        "ticker": "GOOG",
+        "shares_sold": 50.0,
+        "capital_gain": 1000.0
+      },
+      {
+        "ticker": "MSFT",
+        "shares_sold": 75.0,
+        "capital_gain": 3750.0
+      }
+    ]
+  },
+  "warnings": [],
+  "errors": [],
+  "metadata": {
+    "config": {
+      "model_name": "stock_liquidation_advanced_optimization",
+      "model_id": "PORT_OPT_002",
+      "submission_id": "SUB_20250115_002",
+      "model_type": "milp",
+      "playbook_type": "portfolio_optimization",
+      "datasets": {
+        "holdings": "tests/test_data/sample_data/portfolio_optimization/holdings.csv",
+        "acquisitions": "tests/test_data/sample_data/portfolio_optimization/purchase_history.csv"
+      },
+      "columns": {
+        "ticker": "ticker",
+        "shares_held": "shares_held",
+        "current_price": "current_price",
+        "total_value": "total_value",
+        "acquisition_date": "acquisition_date",
+        "purchase_price": "purchase_price",
+        "shares_purchased": "shares_purchased"
+      },
+      "constraints": [],
+      "objective": {
+        "type": "minimize",
+        "function": "tax_liability",
+        "description": "Minimize total capital gains tax liability"
+      },
+      "optimizer_params": {
+        "solver": "APOPT",
+        "verbose": true,
+        "remote": false,
+        "time_limit": 600,
+        "max_iter": 1000,
+        "mip_gap": 0.01
+      },
+      "tax_parameters": {
+        "short_term_cg_rate": 0.37,
+        "long_term_cg_rate": 0.2,
+        "ordinary_income_offset_limit": 3000,
+        "long_term_threshold_days": 365,
+        "valuation_date": "2025-01-15"
+      },
+      "output": {
+        "save_results": true,
+        "directory": "outputs/stock_liquidation_advanced_optimization"
+      },
+      "metadata": {
+        "client_name": "High-Net-Worth Client",
+        "portfolio_type": "Taxable Advisory Account",
+        "optimization_date": "2025-01-15",
+        "analyst": "Advanced Research Team",
+        "notes": "Advanced configuration with fine-tuned solver parameters",
+        "version": "1.2",
+        "environment": "production"
+      }
+    }
+  },
+  "timestamp": "2025-11-14T12:55:28.929025"
+}
